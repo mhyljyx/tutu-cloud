@@ -1,0 +1,26 @@
+server:
+  port: 8055
+
+spring:
+  application:
+    name: gateway-provider
+  cloud:
+    nacos:
+      config:
+        server-addr: 124.223.68.234:8848
+        namespace: 4925f4f8-a4ac-4ecd-a8bf-30bdbbd5e225
+        group: TEST_GROUP
+        shared-configs:
+          - dataId: gateway-application.yml
+            group: TEST_GROUP
+            refresh: true
+      discovery:
+        server-addr: 124.223.68.234:8848
+        namespace: 4925f4f8-a4ac-4ecd-a8bf-30bdbbd5e225
+        group: TEST_GROUP
+    gateway:
+      routes:
+      - id: admin
+        uri: lb://admin-management-provider
+        predicates:
+        - Path=/test/**
