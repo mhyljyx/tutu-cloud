@@ -1,12 +1,10 @@
 package com.tztang.authservice.service.impl;
 
 import com.alibaba.fastjson2.JSON;
+import com.tztang.authservice.pojo.entity.LoginUser;
 import com.tztang.authservice.service.MyUserCacheService;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.cache.SpringCacheBasedUserCache;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,14 +15,17 @@ public class MyUserCacheServiceImpl implements MyUserCacheService {
     @Resource(name = "stringRedisTemplateAuth_db")
     private StringRedisTemplate stringRedisTemplateAuthDb;
 
-    public UserDetails getUserFromCache(String username) {
-        return JSON.parseObject(stringRedisTemplateAuthDb.opsForValue().get(username), UserDetails.class);
+    @Override
+    public LoginUser getUserFromCache(String username) {
+        return JSON.parseObject(stringRedisTemplateAuthDb.opsForValue().get(username), LoginUser.class);
     }
 
+    @Override
     public void putUserInCache(UserDetails user) {
-        stringRedisTemplateAuthDb.opsForValue().set(user.getUsername(), JSON.toJSONString(user));
+        stringRedisTemplateAuthDb.opsForValue().set("Login:" + user.getUsername(), JSON.toJSONString(user));
     }
 
+    @Override
     public void removeUserFromCache(String username) {
         stringRedisTemplateAuthDb.delete(username);
     }

@@ -1,6 +1,8 @@
 package com.tztang.authservice.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.crypto.digest.DigestAlgorithm;
+import cn.hutool.crypto.digest.Digester;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.tztang.authservice.mapper.SysUserMapper;
 import com.tztang.authservice.pojo.entity.LoginUser;
@@ -10,6 +12,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

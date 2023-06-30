@@ -12,6 +12,7 @@
     <packaging>pom</packaging>
 
     <properties>
+        <jwt.version>0.9.1</jwt.version>
         <java.version>8</java.version>
         <hutool.version>5.8.2</hutool.version>
         <mybatis.plus-veriosn>3.5.2</mybatis.plus-veriosn>

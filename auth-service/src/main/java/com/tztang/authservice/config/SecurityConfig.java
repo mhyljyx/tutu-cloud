@@ -1,5 +1,6 @@
 package com.tztang.authservice.config;
 
+import com.tztang.authservice.exception.CustomAuthenticationEntryPoint;
 import com.tztang.authservice.filter.JwtAuthenticationTokenFilter;
 import com.tztang.authservice.service.MyUserCacheService;
 import com.tztang.authservice.service.MyUserDetailService;
@@ -24,18 +25,26 @@ import javax.annotation.Resource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource
+    private MyUserDetailService myUserDetailService;
+    @Resource
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    @Resource
+    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+            .csrf().disable()
             .authorizeRequests()
+            .antMatchers("/login").permitAll()
             .anyRequest().authenticated()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
-            .formLogin();
+            .exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint)
+            .and()
+            .userDetailsService(myUserDetailService);
     }
 
     /**
