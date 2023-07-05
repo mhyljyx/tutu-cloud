@@ -14,6 +14,8 @@ public class JwtUtil {
 
     //用户名
     public static String USER_NAME = "userName";
+    //角色id
+    public static String USER_ROLE = "role";
 
     /**
      * 创建jwt
@@ -25,7 +27,6 @@ public class JwtUtil {
                 .setIssuedAt(new Date())
                 .addClaims(map)
                 .signWith(SignatureAlgorithm.HS256, SING_KEY)
-                .setExpiration(new Date(System.currentTimeMillis() + 30000))
                 .compact();
     }
 

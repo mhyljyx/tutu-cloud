@@ -22,12 +22,12 @@ public class MyUserCacheServiceImpl implements MyUserCacheService {
 
     @Override
     public void putUserInCache(UserDetails user) {
-        stringRedisTemplateAuthDb.opsForValue().set("Login:" + user.getUsername(), JSON.toJSONString(user));
+
     }
 
     @Override
     public void removeUserFromCache(String username) {
-        stringRedisTemplateAuthDb.delete(username);
+
     }
 
 }

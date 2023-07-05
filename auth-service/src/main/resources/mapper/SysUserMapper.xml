@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tztang.authservice.mapper.SysUserMapper">
+
+    <select id="getAuthority" resultType="string">
+        SELECT
+            sys_user.id,
+            sys_role.role_id,
+            sys_menu.menu_id
+        FROM sys_user sys_user
+        LEFT JOIN sys_user_role sys_user_role ON sys_user.id = sys_user_role.user_id
+        LEFT JOIN sys_role sys_role ON sys_role.id = sys_user_role.role_id
+        LEFT JOIN sys_role_menu sys_role_menu ON sys_role_menu.role_id = sys_role.id AND sys_role_menu.role_id = sys_user_role.role_id
+        LEFT JOIN sys_menu sys_menu ON sys_menu.id = sys_role_menu.menu_id
+        <where>
+            AND sys_user.is_del = '0'
+            <if test="userId != null">
+                AND sys_user.id = #{userId},
+            </if>
+        </where>
+    </select>
+
+</mapper>

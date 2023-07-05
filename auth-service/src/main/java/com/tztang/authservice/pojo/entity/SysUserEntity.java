@@ -13,7 +13,7 @@ import java.util.Date;
 public class SysUserEntity {
 
     @TableId(type = IdType.INPUT)
-    private String id;
+    private Integer id;
 
     private String userName;
 
